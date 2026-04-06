@@ -45,14 +45,14 @@ router.put("/brokers/:brokerId/equity-release", async (req, res) => {
     if (existing) {
       const [updated] = await db
         .update(equityReleaseTable)
-        .set(body)
+        .set(body as any)
         .where(eq(equityReleaseTable.brokerId, brokerId))
         .returning();
       res.json(updated);
     } else {
       const [created] = await db
         .insert(equityReleaseTable)
-        .values({ ...body, brokerId })
+        .values({ ...body, brokerId } as any)
         .returning();
       res.json(created);
     }

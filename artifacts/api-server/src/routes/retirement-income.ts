@@ -45,14 +45,14 @@ router.put("/brokers/:brokerId/retirement-income", async (req, res) => {
     if (existing) {
       const [updated] = await db
         .update(retirementIncomeTable)
-        .set(body)
+        .set(body as any)
         .where(eq(retirementIncomeTable.brokerId, brokerId))
         .returning();
       res.json(updated);
     } else {
       const [created] = await db
         .insert(retirementIncomeTable)
-        .values({ ...body, brokerId })
+        .values({ ...body, brokerId } as any)
         .returning();
       res.json(created);
     }
